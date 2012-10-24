@@ -11,13 +11,17 @@ namespace Oss
     {
         public ListObjectsRequest(string bucketName)
         {
+            var loader = new Windows.ApplicationModel.Resources.ResourceLoader();
+            
             if (string.IsNullOrEmpty(bucketName))
             {
-                throw new ArgumentException(OssResources.ExceptionIfArgumentStringIsNullOrEmpty, "bucketName");
+                var text = loader.GetString("ExceptionIfArgumentStringIsNullOrEmpty");
+                throw new ArgumentException(text, "bucketName");
             }
             if (!OssUtils.IsBucketNameValid(bucketName))
             {
-                throw new ArgumentException(OssResources.BucketNameInvalid, "bucketName");
+                var text = loader.GetString("BucketNameInvalid");
+                throw new ArgumentException(text, "bucketName");
             }
             this.BucketName = bucketName;
         }

@@ -9,7 +9,7 @@ using System.Xml.Serialization;
 
 namespace Oss.Model
 {
-    [Serializable, DesignerCategory("code"), XmlRoot("CommonPrefixes"), XmlType(AnonymousType = true), DebuggerStepThrough, GeneratedCode("xsd", "4.0.30319.1")]
+    [XmlRoot("CommonPrefixes"), XmlType(AnonymousType = true)]
     public class ListBucketResultCommonPrefixes
     {
         private string[] prefixField;

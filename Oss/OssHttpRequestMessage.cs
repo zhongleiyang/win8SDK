@@ -20,14 +20,17 @@ namespace Oss
         {
             if (bucketName != NONEEDBUKETNAME)
             {
+                var loader = new Windows.ApplicationModel.Resources.ResourceLoader();
                 if (string.IsNullOrEmpty(bucketName))
-                {
-                    throw new ArgumentException(OssResources.ExceptionIfArgumentStringIsNullOrEmpty, "bucketName");
+                {                   
+                    var text = loader.GetString("ExceptionIfArgumentStringIsNullOrEmpty");
+                    throw new ArgumentException(text, "bucketName");
                 }
 
                 if (!string.IsNullOrEmpty(bucketName) && !OssUtils.IsBucketNameValid(bucketName))
                 {
-                    throw new ArgumentException(OssResources.BucketNameInvalid, "bucketName");
+                    var text = loader.GetString("BucketNameInvalid");
+                    throw new ArgumentException(text, "bucketName");
                 }
             }
             else

@@ -7,7 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Handlers;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
@@ -34,18 +33,18 @@ namespace Oss
 
         public OssClient(Uri endpoint, string accessId, string accessKey)
         {
+            var loader = new Windows.ApplicationModel.Resources.ResourceLoader();
             if (endpoint == null)
             {
-
-                throw new ArgumentNullException(OssResources.ExceptionIfArgumentStringIsNullOrEmpty, "endpoint");
+                throw new ArgumentNullException(loader.GetString("ExceptionIfArgumentStringIsNullOrEmpty"), "endpoint");
             }
             if (string.IsNullOrEmpty(accessId))
             {
-                throw new ArgumentException(OssResources.ExceptionIfArgumentStringIsNullOrEmpty, "accessId");
+                throw new ArgumentException(loader.GetString("ExceptionIfArgumentStringIsNullOrEmpty"), "accessId");
             }
             if (string.IsNullOrEmpty(accessKey))
             {
-                throw new ArgumentException(OssResources.ExceptionIfArgumentStringIsNullOrEmpty, "accessKey");
+                throw new ArgumentException(loader.GetString("ExceptionIfArgumentStringIsNullOrEmpty"), "accessKey");
             }
 
             networkCredential = new NetworkCredential(accessId, accessKey);
@@ -171,15 +170,15 @@ namespace Oss
         {
             PutObjectResult result = null;
             HttpClientHandler hand = null;
-            ProgressMessageHandler processMessageHander = null;
+           // ProgressMessageHandler processMessageHander = null;
             HttpClient localHttpClient = null;
             OssHttpRequestMessage httpRequestMessage = null;
             HttpResponseMessage response = null;
             try
             {
                  hand = new HttpClientHandler();
-                 processMessageHander = new ProgressMessageHandler(hand);
-                 localHttpClient = new HttpClient(processMessageHander);
+            //     processMessageHander = new ProgressMessageHandler(hand);
+                localHttpClient = new HttpClient();
                 localHttpClient.Timeout += new TimeSpan(2 * TimeSpan.TicksPerHour); 
                  httpRequestMessage = new OssHttpRequestMessage(bucketName, key);
 
@@ -196,19 +195,19 @@ namespace Oss
 
                 OssRequestSigner.Sign(httpRequestMessage, networkCredential);
 
-                if (uploadProcessCallback != null)
-                {
-                    processMessageHander.HttpSendProgress += (sender, e) =>
-                    {
-                        uploadProcessCallback(new HttpProcessData()
-                        {
-                            TotalBytes = e.TotalBytes,
-                            BytesTransferred = e.BytesTransferred,
-                            ProgressPercentage = e.ProgressPercentage
-                        });
+                //if (uploadProcessCallback != null)
+                //{
+                //    processMessageHander.HttpSendProgress += (sender, e) =>
+                //    {
+                //        uploadProcessCallback(new HttpProcessData()
+                //        {
+                //            TotalBytes = e.TotalBytes,
+                //            BytesTransferred = e.BytesTransferred,
+                //            ProgressPercentage = e.ProgressPercentage
+                //        });
 
-                    };
-                }
+                //    };
+                //}
 
                 
                 if(cancellationToken != null)
@@ -235,8 +234,8 @@ namespace Oss
                 if (hand != null)
                     hand.Dispose();
 
-                if (processMessageHander != null)
-                    processMessageHander.Dispose();
+                //if (processMessageHander != null)
+                //    processMessageHander.Dispose();
 
                 if (localHttpClient != null)
                     localHttpClient.Dispose();
@@ -307,7 +306,7 @@ namespace Oss
 
                 httpRequestMessage.Method = HttpMethod.Put;
                 httpRequestMessage.Headers.Date = DateTime.UtcNow;
-                httpRequestMessage.Headers.Add("x-oss-acl", acl.GetStringValue());
+                httpRequestMessage.Headers.Add("x-oss-acl", EnumUtils.GetStringValue(acl));
                 OssRequestSigner.Sign(httpRequestMessage, networkCredential);
                 response = await httpClient.SendAsync(httpRequestMessage);
 
@@ -419,7 +418,7 @@ namespace Oss
             OssObject result = null;
 
             HttpClientHandler hand = null;
-            ProgressMessageHandler processMessageHander = null;
+          //  ProgressMessageHandler processMessageHander = null;
             HttpClient localHttpClient = null;
             OssHttpRequestMessage httpRequestMessage = null;
             HttpResponseMessage response = null;
@@ -427,8 +426,8 @@ namespace Oss
             try
             {
                 hand = new HttpClientHandler();
-                processMessageHander = new ProgressMessageHandler(hand);
-                localHttpClient = new HttpClient(processMessageHander);
+           //     processMessageHander = new ProgressMessageHandler(hand);
+                localHttpClient = new HttpClient();
                 localHttpClient.Timeout += new TimeSpan(2 * TimeSpan.TicksPerHour); 
 
                 httpRequestMessage = new OssHttpRequestMessage(getObjectRequest.BucketName, getObjectRequest.Key);
@@ -439,19 +438,19 @@ namespace Oss
                 httpRequestMessage.Headers.Date = DateTime.UtcNow;
 
                 OssRequestSigner.Sign(httpRequestMessage, networkCredential);
-                if (downloadProcessCallback != null)
-                {
-                    processMessageHander.HttpReceiveProgress += (sender, e) =>
-                    {
-                        downloadProcessCallback(new HttpProcessData()
-                        {
-                            TotalBytes = e.TotalBytes,
-                            BytesTransferred = e.BytesTransferred,
-                            ProgressPercentage = e.ProgressPercentage
-                        }); ;
+                //if (downloadProcessCallback != null)
+                //{
+                //    processMessageHander.HttpReceiveProgress += (sender, e) =>
+                //    {
+                //        downloadProcessCallback(new HttpProcessData()
+                //        {
+                //            TotalBytes = e.TotalBytes,
+                //            BytesTransferred = e.BytesTransferred,
+                //            ProgressPercentage = e.ProgressPercentage
+                //        }); ;
 
-                    };
-                }
+                //    };
+                //}
 
                 if (cancellationToken != null)
                     response = await localHttpClient.SendAsync(httpRequestMessage, (CancellationToken)cancellationToken);
@@ -476,8 +475,8 @@ namespace Oss
                 if (hand != null)
                     hand.Dispose();
 
-                if (processMessageHander != null)
-                    processMessageHander.Dispose();
+                //if (processMessageHander != null)
+                //    processMessageHander.Dispose();
 
                 if (localHttpClient != null)
                     localHttpClient.Dispose();
@@ -624,7 +623,7 @@ namespace Oss
             MultipartUploadResult result = null;
 
             HttpClientHandler hand = null;
-            ProgressMessageHandler processMessageHander = null;
+           // ProgressMessageHandler processMessageHander = null;
             HttpClient localHttpClient = null;
             OssHttpRequestMessage httpRequestMessage = null;
             HttpResponseMessage response = null;
@@ -632,8 +631,8 @@ namespace Oss
             try
             {
                 hand = new HttpClientHandler();
-                processMessageHander = new ProgressMessageHandler(hand);
-                localHttpClient = new HttpClient(processMessageHander);
+              //  processMessageHander = new ProgressMessageHandler(hand);
+                localHttpClient = new HttpClient();
                 localHttpClient.Timeout += new TimeSpan(2 * TimeSpan.TicksPerHour); 
 
                 Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -646,19 +645,19 @@ namespace Oss
                 httpRequestMessage.Headers.Date = DateTime.UtcNow;
                 httpRequestMessage.Content = new StreamContent(multiUploadObject.Content);
 
-                if (uploadProcessCallback != null)
-                {
-                    processMessageHander.HttpSendProgress += (sender, e) =>
-                    {
-                        uploadProcessCallback(new HttpProcessData()
-                        {
-                            TotalBytes = e.TotalBytes,
-                            BytesTransferred = e.BytesTransferred,
-                            ProgressPercentage = e.ProgressPercentage
-                        });
+                //if (uploadProcessCallback != null)
+                //{
+                //    processMessageHander.HttpSendProgress += (sender, e) =>
+                //    {
+                //        uploadProcessCallback(new HttpProcessData()
+                //        {
+                //            TotalBytes = e.TotalBytes,
+                //            BytesTransferred = e.BytesTransferred,
+                //            ProgressPercentage = e.ProgressPercentage
+                //        });
 
-                    };
-                }
+                //    };
+                //}
 
 
                 OssRequestSigner.Sign(httpRequestMessage, networkCredential);
@@ -685,8 +684,8 @@ namespace Oss
                 if (hand != null)
                     hand.Dispose();
 
-                if (processMessageHander != null)
-                    processMessageHander.Dispose();
+                //if (processMessageHander != null)
+                //    processMessageHander.Dispose();
 
                 if (localHttpClient != null)
                     localHttpClient.Dispose();

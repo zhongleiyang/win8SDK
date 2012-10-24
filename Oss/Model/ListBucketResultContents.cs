@@ -9,7 +9,7 @@ using System.Xml.Serialization;
 
 namespace Oss.Model
 {
-    [Serializable, XmlType(AnonymousType = true), DebuggerStepThrough, GeneratedCode("xsd", "4.0.30319.1"), DesignerCategory("code")]
+    [XmlType(AnonymousType = true), DebuggerStepThrough, GeneratedCode("xsd", "4.0.30319.1")]
     public class ListBucketResultContents
     {
         private string eTagField;
@@ -20,6 +20,7 @@ namespace Oss.Model
         private string storageClassField;
         private string typeField;
 
+        [XmlElement("ETag")]
         public string ETag
         {
             get
@@ -32,6 +33,7 @@ namespace Oss.Model
             }
         }
 
+        [XmlElement("Key")]
         public string Key
         {
             get
@@ -44,6 +46,7 @@ namespace Oss.Model
             }
         }
 
+        [XmlElement("LastModified")]
         public DateTime LastModified
         {
             get
@@ -56,6 +59,7 @@ namespace Oss.Model
             }
         }
 
+        [XmlElement("Owner")]
         public Owner Owner
         {
             get
@@ -68,6 +72,7 @@ namespace Oss.Model
             }
         }
 
+        [XmlElement("Size")]
         public long Size
         {
             get
@@ -80,6 +85,7 @@ namespace Oss.Model
             }
         }
 
+        [XmlElement("StorageClass")]
         public string StorageClass
         {
             get
@@ -92,6 +98,7 @@ namespace Oss.Model
             }
         }
 
+         [XmlElement("Type")]
         public string Type
         {
             get

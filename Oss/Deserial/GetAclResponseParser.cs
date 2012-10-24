@@ -34,11 +34,11 @@ namespace Oss.Deserial
             };
             foreach (string grant in model.Grants)
             {
-                if (grant == CannedAccessControlList.PublicRead.GetStringValue())
+                if (grant == EnumUtils.GetStringValue(CannedAccessControlList.PublicRead))
                 {
                     acl.GrantPermission(GroupGrantee.AllUsers, Permission.Read);
                 }
-                else if (grant == CannedAccessControlList.PublicReadWrite.GetStringValue())
+                else if (grant == EnumUtils.GetStringValue(CannedAccessControlList.PublicReadWrite))
                 {
                     acl.GrantPermission(GroupGrantee.AllUsers, Permission.FullControl);
                 }

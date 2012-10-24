@@ -24,7 +24,8 @@ namespace Oss.Utilities
 
         public static Exception CreateInvalidResponseException(Exception innerException)
         {
-            throw new InvalidOperationException(OssResources.ExceptionInvalidResponse, innerException);
+            var loader = new Windows.ApplicationModel.Resources.ResourceLoader();
+            throw new InvalidOperationException(loader.GetString("ExceptionInvalidResponse"), innerException);
         }
     }
 }

@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 
 namespace Oss.Deserial
 {
-    [Serializable]
-    internal class ResponseDeserializationException : InvalidOperationException, ISerializable
+    internal class ResponseDeserializationException : InvalidOperationException
     {
         public ResponseDeserializationException()
         {
@@ -19,10 +18,6 @@ namespace Oss.Deserial
         {
         }
 
-        protected ResponseDeserializationException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-        }
 
         public ResponseDeserializationException(string message, Exception innerException)
             : base(message, innerException)

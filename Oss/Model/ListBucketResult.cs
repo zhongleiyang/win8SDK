@@ -10,7 +10,7 @@ using System.Xml.Serialization;
 
 namespace Oss.Model
 {
-    [Serializable, XmlRoot(Namespace = "", IsNullable = false), XmlType(AnonymousType = true), GeneratedCode("xsd", "4.0.30319.1"), DebuggerStepThrough, DesignerCategory("code")]
+    [XmlRoot(Namespace = "", IsNullable = false), XmlType(AnonymousType = true), GeneratedCode("xsd", "4.0.30319.1"), DebuggerStepThrough,]
     public class ListBucketResult
     {
         private ListBucketResultCommonPrefixes[] commonPrefixesField;

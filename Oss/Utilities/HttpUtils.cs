@@ -35,7 +35,7 @@ namespace Oss.Utilities
         public static string ReEncode(string text, string fromCharset, string toCharset)
         {
             byte[] buffer = Encoding.GetEncoding(fromCharset).GetBytes(text);
-            return Encoding.GetEncoding(toCharset).GetString(buffer);
+            return Encoding.GetEncoding(toCharset).GetString(buffer, 0, buffer.Length);
         }
 
         public static string UrlEncode(string data, string charset)

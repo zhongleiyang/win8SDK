@@ -14,13 +14,14 @@ namespace Oss
 
         public string ComputeSignature(string key, string data)
         {
+            var loader = new Windows.ApplicationModel.Resources.ResourceLoader();
             if (string.IsNullOrEmpty(key))
             {
-                throw new ArgumentException(OssResources.ExceptionIfArgumentStringIsNullOrEmpty, "key");
+                throw new ArgumentException(loader.GetString("ExceptionIfArgumentStringIsNullOrEmpty"), "key");
             }
             if (string.IsNullOrEmpty(data))
             {
-                throw new ArgumentException(OssResources.ExceptionIfArgumentStringIsNullOrEmpty, "data");
+                throw new ArgumentException(loader.GetString("ExceptionIfArgumentStringIsNullOrEmpty"), "data");
             }
             return this.ComputeSignatureCore(key, data);
         }

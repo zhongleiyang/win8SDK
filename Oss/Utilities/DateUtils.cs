@@ -12,10 +12,10 @@ namespace Oss.Utilities
         private const string _iso8601DateFormat = "yyyy-MM-dd'T'HH:mm:ss.fff'Z'";
         private const string _rfc822DateFormat = @"ddd, dd MMM yyyy HH:mm:ss \G\M\T";
 
-        public static string FormatIso8601Date(DateTime dt)
-        {
-            return dt.ToString("yyyy-MM-dd'T'HH:mm:ss.fff'Z'", CultureInfo.CreateSpecificCulture("en-US"));
-        }
+        //public static string FormatIso8601Date(DateTime dt)
+        //{
+        //    return dt.ToString("yyyy-MM-dd'T'HH:mm:ss.fff'Z'", CultureInfo.CreateSpecificCulture("en-US"));
+        //}
 
         public static string FormatRfc822Date(DateTime dt)
         {

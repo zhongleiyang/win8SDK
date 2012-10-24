@@ -7,7 +7,6 @@ using System.Xml.Serialization;
 
 namespace Oss.Model
 {
-    [Serializable]
     public class MultipartUploadPartModel
     {
        public  MultipartUploadPartModel()
@@ -20,8 +19,9 @@ namespace Oss.Model
            ETag = _ETag;
        }
 
+         [XmlElement("PartNumber")]
         public UInt32 PartNumber { get; set; }
-
+         [XmlElement("ETag")]
         public string ETag { get; set; }
     }
 }

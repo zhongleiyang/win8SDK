@@ -20,23 +20,23 @@ namespace Oss.Deserial
             ObjectMetadata metadata = new ObjectMetadata();
             foreach (KeyValuePair<string, IEnumerable<string>> header in response.Headers)
             {
-                if (header.Key.StartsWith("x-oss-meta-", false, CultureInfo.InvariantCulture))
+                if (header.Key.StartsWith("x-oss-meta-"))
                 {
                     metadata.UserMetadata.Add(header.Key.Substring("x-oss-meta-".Length), header.Value.First());
                 }
                 else
                 {
-                    if (string.Equals(header.Key, "Content-Length", StringComparison.InvariantCultureIgnoreCase))
+                    if (string.Equals(header.Key, "Content-Length"))
                     {
                         metadata.ContentLength = long.Parse(header.Value.First(), CultureInfo.InvariantCulture);
                         continue;
                     }
-                    if (string.Equals(header.Key, "ETag", StringComparison.InvariantCultureIgnoreCase))
+                    if (string.Equals(header.Key, "ETag"))
                     {
                         metadata.ETag = OssUtils.TrimETag(header.Value.First());
                         continue;
                     }
-                    if (string.Equals(header.Key, "Last-Modified", StringComparison.InvariantCultureIgnoreCase))
+                    if (string.Equals(header.Key, "Last-Modified"))
                     {
                         metadata.LastModified = DateUtils.ParseRfc822Date(header.Value.First());
                         continue;

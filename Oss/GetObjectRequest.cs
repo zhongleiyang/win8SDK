@@ -17,21 +17,22 @@ namespace Oss
 
         public GetObjectRequest(string bucketName, string key)
         {
+            var loader = new Windows.ApplicationModel.Resources.ResourceLoader();
             if (string.IsNullOrEmpty(bucketName))
             {
-                throw new ArgumentException(OssResources.ExceptionIfArgumentStringIsNullOrEmpty, "bucketName");
+                throw new ArgumentException(loader.GetString("ExceptionIfArgumentStringIsNullOrEmpty"), "bucketName");
             }
             if (string.IsNullOrEmpty(key))
             {
-                throw new ArgumentException(OssResources.ExceptionIfArgumentStringIsNullOrEmpty, "key");
+                throw new ArgumentException(loader.GetString("ExceptionIfArgumentStringIsNullOrEmpty"), "key");
             }
             if (!OssUtils.IsBucketNameValid(bucketName))
             {
-                throw new ArgumentException(OssResources.BucketNameInvalid, "bucketName");
+                throw new ArgumentException(loader.GetString("BucketNameInvalid"), "bucketName");
             }
             if (!OssUtils.IsObjectKeyValid(key))
             {
-                throw new ArgumentException(OssResources.ObjectKeyInvalid, "key");
+                throw new ArgumentException(loader.GetString("ObjectKeyInvalid"), "key");
             }
             this.BucketName = bucketName;
             this.Key = key;

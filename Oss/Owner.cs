@@ -10,7 +10,7 @@ using System.Xml.Serialization;
 namespace Oss
 {
     [XmlRoot("Owner")]
-    public class Owner : ICloneable
+    public class Owner 
     {
         public Owner()
         {

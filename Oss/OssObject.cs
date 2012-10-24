@@ -18,7 +18,10 @@ namespace Oss
         {
             if (string.IsNullOrEmpty(key))
             {
-                throw new ArgumentException(OssResources.ExceptionIfArgumentStringIsNullOrEmpty, "key");
+                var loader = new Windows.ApplicationModel.Resources.ResourceLoader();
+                var text = loader.GetString("ExceptionIfArgumentStringIsNullOrEmpty");
+
+                throw new ArgumentException(text, "key");
             }
             this._key = key;
         }
@@ -61,7 +64,8 @@ namespace Oss
             {
                 if (string.IsNullOrEmpty(value))
                 {
-                    throw new ArgumentException(OssResources.ExceptionIfArgumentStringIsNullOrEmpty, "value");
+                    var loader = new Windows.ApplicationModel.Resources.ResourceLoader();
+                    throw new ArgumentException(loader.GetString("ExceptionIfArgumentStringIsNullOrEmpty"), "value");
                 }
                 this._key = value;
             }
